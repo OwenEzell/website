@@ -162,43 +162,39 @@ nav a:focus {
 }
 
 article {
-  margin: 60px 0px 60px 0px;
-
-  display: grid;
-  grid-template-columns: minmax(0, 55ch) 1fr;
-  column-gap: clamp(16px, 3vw, 40px);
+  margin: 60px 0;
 }
 
-article
-  :is(h1, h2, h3, p, address, time, blockquote, ul, ol, address, time, footer) {
-  grid-column: 1;
-  margin: 0;
-}
-
-/* eliminate header as a box for the layout */
 article > header {
   display: contents;
 }
 
-article img {
-  grid-column: 1;
-  border-radius: 20px;
-  max-width: 100%;
+article > * {
+  max-width: 55ch;
+}
+
+article > * + * {
+  margin-top: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+article img,
+article iframe.video-wrapper {
+  display: block;
+  width: 100%;
   height: auto;
+  border-radius: 20px;
   margin-top: var(--big-gap);
   margin-bottom: var(--big-gap);
 }
 
-article img.full-bleed {
-  grid-column: 1 / -1;
-  display: inline-block;
-  max-width: 100%;
-  height: auto;
+article img.full-bleed,
+article .carousel {
+  max-width: none;
+  width: 100%;
 }
 
 article .carousel {
-  grid-column: 1 / -1;
-  margin-block: var(--big-gap);
   display: flex;
   gap: var(--big-gap);
   overflow-x: auto;
@@ -206,26 +202,16 @@ article .carousel {
   padding-inline: 2px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  margin: 0;
 }
 
 article .carousel img {
   flex: 0 0 300px;
   max-width: 300px;
-  height: auto;
-  margin: 0;
-
-  border-radius: 20px;
   scroll-snap-align: start;
 }
 
 article iframe.video-wrapper {
-  grid-column: 1;
-  margin-top: var(--big-gap);
-  margin-bottom: var(--big-gap);
-  border-radius: 20px;
-  overflow: hidden;
-  display: block;
-  width: 100%;
   aspect-ratio: 16 / 9;
   border: 0;
 }
@@ -239,21 +225,19 @@ article h1 {
   font-size: var(--h1-font-size);
   max-width: 22ch;
   color: #302e2c;
-  margin-bottom: var(--gap);
 }
 
 article h2 {
   font-size: var(--h2-font-size);
-  color: #302e2c;
+  max-width: 40ch;
   margin-top: var(--big-gap);
-  margin-bottom: var(--gap);
+
+  color: #302e2c;
 }
 
 article p {
   text-align: left;
   hyphens: none;
-  margin-top: var(--gap);
-  margin-bottom: var(--gap);
 }
 
 blockquote p {
@@ -269,10 +253,7 @@ article footer {
   margin-top: var(--big-gap);
 }
 
-@media (max-width: calc(55ch + clamp(16px, 3vw, 40px))) {
-  article {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 700px) {
   article .carousel img {
     flex: 0 0 80%;
     max-width: 80%;
